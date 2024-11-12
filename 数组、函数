@@ -1,0 +1,206 @@
+============================================================================
+复习要点
+	消化吸收今天所学的知识
+	一维数组、二维数组、字符数组
+	函数
+============================================================================
+综合练习
+
+1、任意给出一个年、月、日，判断是这一年的第几天:
+   闰年算法：能被4整除且不能被100整除，或者能被400整除
+   如：2012 5 10 是这一年的第131天
+   提示：使用数组的方式计算，将每月的天数放在一个数组中
+#include <stdio.h>
+#include <conio.h>
+int main()
+{
+	int total = 0,day = 0,month = 0,year = 0,leap = 0,i;
+	int month_days[]={31,28,31,30,31,30,31,31,30,31,30,31};
+	printf("please input: year month day\n");
+	scanf("%d %d %d",&year,&month,&day);
+	
+	for(i=0;i<month-1;i++)
+		total +=month_days[i];
+	
+	total=total+day;
+	if( month > 2 && ( (year%4 == 0 && year%100 != 0) || (year%400) == 0 ) )
+		leap=1;	
+	
+	total=total+leap;
+	printf("%d:%d:%d is %dth day\n", year, month, day, total);
+	getch();
+	return 0;
+}
+
+2、采用分文件、分函数的方法完成
+   个人收入计算个人所得税
+   提示：参数为收入的钱数、返回纳税总额
+#include <stdio.h>
+
+double tax_calc(double income)
+{
+	double tax=0,tax_income;
+	if(income<0)
+		return -1;
+	tax_income=income-3500; 
+	if(tax_income<=0) 
+	   tax=0; 
+	else if(tax_income<=1500) 
+	   tax=tax_income*0.03;
+	else if(tax_income>1500 && tax_income<=4500) 
+	   tax=tax_income*0.1-105;
+	else if(tax_income>4500 && tax_income<=9000) 
+	   tax=tax_income*0.20-555;
+	else if(tax_income>9000 && tax_income<=35000) 
+	   tax=tax_income*0.25-1005;
+	else if(tax_income>35000 && tax_income<=55000) 	  
+		tax=tax_income*0.30-2755;
+	else if(tax_income>55000 && tax_income<=8000) 
+	   tax=tax_income*0.35-5505;
+	else if(tax_income>80000) 
+	   tax=tax_income*0.45-13505;
+	  return tax;
+}
+
+int main() 
+{  
+	double  income,tax;  /* 定义变量收入、应税所得、个人所得税 */ 
+
+	while(1) 
+	{
+		printf("请输入你的收入:\n");
+		scanf("%lf",&income); 
+		
+		tax=tax_calc(income);
+		if(tax<0)
+			break;
+		printf("你所缴纳的税为 is:%.2f\n",tax);
+		printf("你的最终收入是 is:%.2f\n",income-tax);
+	}
+	return 0;
+} 
+
+
+3、打字游戏
+	1)随机函数
+	A.srand((unsigned)time(NULL));以当前时间为准，设置随机种子
+	  注意：此函数，在每次开始游戏后调用一次即可
+	B.ch=rand();
+	  注意：rand()函数，每调用一次，产生一个随机数字
+	2)获得键值函数
+	  ch=mygetch();  //无需按下回车，可直接获得键盘上按下的键值
+	  
+	还可以自己封装一个无阻塞，无回显的getch，实现如下：
+	#include <termios.h>
+	#include <unistd.h>
+	char mygetch()
+	 {
+		struct termios oldt, newt;
+		char ch;
+		tcgetattr( STDIN_FILENO, &oldt );
+		newt = oldt;
+		newt.c_lflag &= ~( ICANON | ECHO );
+		tcsetattr( STDIN_FILENO, TCSANOW, &newt );
+		ch = getchar();
+		tcsetattr( STDIN_FILENO, TCSANOW, &oldt );
+		return ch;
+	}
+	3)时间函数
+	start_time=time(NULL);
+	edn_time=time(NULL);
+	//可以返回系统当前时间，以秒为单位
+
+	
+	4)system("clear");//清空屏幕
+
+	5)所需头文件
+	#include <time.h>
+	#include <math.h>
+	#include <stdio.h>
+	#include <stdlib.h>
+
+//简单的字母输入测试程式
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+#include <math.h>
+#include <unistd.h>
+#include <termios.h>
+#define AL  51 //定义测试字母的最大长度
+char mygetch( ) {
+    struct termios oldt, newt;
+    char ch;
+    tcgetattr( STDIN_FILENO, &oldt );
+    newt = oldt;
+    newt.c_lflag &= ~( ICANON | ECHO );
+    tcsetattr( STDIN_FILENO, TCSANOW, &newt );
+    ch = getchar();
+    tcsetattr( STDIN_FILENO, TCSANOW, &oldt );
+    return ch;
+}
+void help()
+{
+	printf("\n*****************************************");
+	printf("\n* 输入过程中无法退出!                   *");
+	printf("\n* 请按所给字母敲击键盘!                 *");
+	printf("\n* 按任意键开始测试,按下首字母时开始计时!*");
+	printf("\n* 输入出错则以 _ 表示                   *");
+	printf("\n*****************************************\n\n");
+}
+
+main()
+{
+	char str[AL] = "";
+
+	char ch;
+	int i=0;
+	int count=0;
+	int k;
+	time_t t_start,t_end;
+
+	while(1)
+	{
+		system("clear");//vc++下调用system();函数实现清屏
+		srand((unsigned)time(NULL));//采集当前时间做为随机数rand()的开始
+		
+		for(k = 0;k<AL-1;k++)//打印50个英文字符用于测试
+		{
+			str[k] = rand() % 26 +'a' ;
+		}
+		
+		str[AL-1] = '\0';//写完字符后补上结束标志位
+		
+		help();
+	
+		mygetch();
+		
+		printf("\n%s\n",str);
+		count =0;
+		for(i=0;i<AL-1;i++)
+		{
+			ch = mygetch();
+			if(i==0)
+				t_start = time(NULL);//取开始时间
+			if(ch == str[i])
+			{
+				printf("%c",ch);
+				count++;
+			}
+			else
+			{
+				printf("_");//打印出错标志
+			}
+		}
+		t_end = time(NULL);//取结束时间
+		printf("\n完成输入!\n用时 %d s\n正确率%lf %c\n按下Esc退出，任意键继续!\n\n",(t_end-t_start),count*100.0/50,'%');
+		while(1)
+		{
+			ch=mygetch();
+			if(ch == 27) 
+			return 0;//若为esc再次退出，以退出程序
+			if(ch==' ')
+			break;
+		}
+	}
+}
+	

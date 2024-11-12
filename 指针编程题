@@ -229,6 +229,35 @@ int main(int argc, char const *argv[])
 
 2、编写一个函数实现将一个字符串中的第一个空格和最后一个空格去掉，
 比如："ab cde f gh k"，去掉后变成"abcde f ghk"
+#include <stdio.h>
+#include <string.h>
+char *my_strcopy(char *str, char *src)
+{
+    char *p = str;
+    while (*str++ = *src++) // 遇到\0不复制 循环复制 直到\0为止
+        ;
+    return p; // 返回最初的地址
+}
+int main(int argc, char const *argv[])
+{
+    char str[128] = "abc def ghi jk";
+    fgets(str, sizeof(str), stdin);
+    char *p = str;
+    // 去掉第一个空格
+    while ((*p != '\0') && (*p != ' '))
+        p++;
+    if (*p != '\0')
+        my_strcopy(p, p + 1);
+
+    // 去掉第二个空格
+    p = str + strlen(str); // 指针定位到str末尾
+    while ((*p != ' ') && (p != str))
+        p--;
+    if ((*p != '\0') && (p != str))
+        my_strcopy(p, p + 1);
+    printf("%s", str);
+    return 0;
+}
 
 3、使用sscanf读取#和@之间的字符串 abc#def@ghi
    使用sscanf读取"ti:简单爱]" ":"号与"]"之间的内容

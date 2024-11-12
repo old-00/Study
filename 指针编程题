@@ -1,5 +1,5 @@
 程序设计题(要求用指针的方法完成)
-1.编写程序，将一个字符串反向存放(编写函数实现)。
+1.编写程序，将一个字符串反向存放(编写函数实现)
 #include <stdio.h>
 #include <string.h>
 void str_recover(char *p, int j)

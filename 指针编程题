@@ -1,0 +1,158 @@
+(三)程序设计题(要求用指针的方法完成)
+
+1.	编写程序，将一个字符串反向存放(编写函数实现)。
+ #include <stdio.h>
+#include <string.h>
+void str_recover(char *p, int j)
+{
+    int i = 0;
+    char temp;
+    j--;
+    while (i < j)
+    {
+        temp = p[i];
+        p[i] = p[j];
+        p[j] = temp;
+        i++;
+        j--;
+    }
+}
+int main(int argc, char const *argv[])
+{
+    char str1[128] = "";
+    fgets(str1, sizeof(str1), stdin);
+    str1[strlen(str1) - 1] = '\0';
+    int i = 0;
+    while (str1[i] && ++i)
+        ;
+    char *p = NULL;
+    p = str1;
+    str_recover(p, i);
+    printf("%s\n", p);
+
+    return 0;
+}
+
+2.	编写程序my_strlen(char *str)，测得指定字符串的长度(编写函数实现)
+#include <stdio.h>
+#include <string.h>
+
+int str_len(char *p)
+{
+    int i = 0;
+    while (p[i] && ++i)
+        ;
+    return i;
+}
+int main(int argc, char const *argv[])
+{
+    char str1[128] = "";
+    fgets(str1, sizeof(str1), stdin);
+    str1[strlen(str1) - 1] = '\0';
+
+    char *p = str1;
+    int ret = str_len(p);
+    printf("输入字符串的长度为：%d\n", ret);
+    return 0;
+}
+
+3.	编写一个字符串拷贝函数，my_strcpy(char *dest,char *src)(编写函数实现)
+	将源操作数src中的字符串拷贝到dest所指向的数组中
+#include <stdio.h>
+#include <string.h>
+void my_strcopy(char *str1, char *str2)
+{
+    int i = 0;
+    while (str1[i])
+    {
+        str2[i] = str1[i];
+        i++;
+    }
+    str2[i] = '\0';
+}
+int main(int argc, char const *argv[])
+{
+    char str1[128] = "";
+    char str2[128] = "";
+    fgets(str1, sizeof(str1), stdin);
+    str1[strlen(str1) - 1] = '\0';
+
+    char *p1 = str1;
+    char *p2 = str2;
+    my_strcopy(p1, p2);
+    printf("%s\n", str2);
+    return 0;
+}
+
+4.	编写一个函数实现将"12345"变成十进制12345(编写函数实现)
+#include <stdio.h>
+#include <string.h>
+void turn_ten(char *str, int *num)
+{
+    int tmp = '1' - 1;
+    int i = 0;
+    while (str[i])
+    {
+        num[i] = str[i] - tmp;
+        i++;
+    }
+}
+int main(int argc, char const *argv[])
+{
+    char str1[128] = "";
+    fgets(str1, sizeof(str1), stdin);
+    str1[strlen(str1) - 1] = '\0';
+    int num1[128] = {0};
+    char *p1 = str1;
+    int *p2 = num1;
+    int n = 0;
+    while (p1[n] && ++n)
+        ;
+    turn_ten(p1, p2);
+    for (int i = 0; i < n; i++)
+    {
+        printf("%d", p2[i]);
+    }
+    return 0;
+}
+
+
+5.	编写函数my_strcmp(char *str1, char  *str2)，比较、返回两等长字符串的大小(编写函数实现)
+要求相等返回0，字符串1大于字符串2返回1，字符串2大于字符串1返回-1
+字符串1的第一个字母大于字符串2的第一个字母，则判定字符串1大于字符串2，相等则比较第二字母，以此类推，全部相同则判定两字符串相等
+#include <stdio.h>
+#include <string.h>
+int my_strcmp(char *str1, char *str2)
+{
+    int count = 0;
+    int i = 0;
+    while (str2[count] && ++count)
+        ;
+    for (i = 0; i < count; i++)
+    {
+        if (str1[i] > str2[i])
+            return 1;
+        if (str1[i] < str2[i])
+            return -1;
+    }
+    if (i == count)
+        return 0;
+    else
+        return -1234;
+}
+
+int main(int argc, char const *argv[])
+{
+    char str1[128] = "";
+    char str2[128] = "helloworld!";
+    fgets(str1, sizeof(str1), stdin);
+    str1[strlen(str1) - 1] = '\0';
+
+    char *p1 = str1;
+    char *p2 = str2;
+    int ret = my_strcmp(p1, p2);
+    printf("%d\n", ret);
+    return 0;
+}
+
+

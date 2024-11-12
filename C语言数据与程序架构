@@ -1,0 +1,199 @@
+============================================================================
+复习要点
+   a. C语言概述，C程序文件结构
+   b. 数据类型，运算符，表达式
+   C. 程序结构if, switch, while等
+============================================================================
+作业:
+	1.输出0-1000以内的水仙花数
+	水仙花数算法：一个数=它各位的立方和，例如:153= 1*1*1 + 5*5*5 + 3*3*3
+	提示：for循环,求余(%)、取整(/)运算符
+
+#include <stdio.h>
+#include <conio.h>
+int main() 
+{
+	int a,b,c,i;  
+	for(i=0;i<=999;i++) 
+	{
+		a=(i/100)%10; 
+		b=(i/10)%10; 
+		c=(i/1)%10;  
+		if(i==a*a*a+b*b*b+c*c*c) 
+			printf("%d  ",i);
+	}
+	getch();
+	return 0;
+} 
+
+
+	2.任意给出一个年、月、日，判断是这一年的第几天:
+	  闰年算法：能被4整除且不能被100整除，或者能被400整除
+	  如：2012 5 10 是这一年的第131天
+	  提示：switch
+#include <stdio.h>
+#include <conio.h>
+int main()
+{
+	int total = 0,day = 0,month = 0,year = 0,leap = 0;
+	printf("please input: year month day\n");
+	scanf("%d %d %d",&year,&month,&day);
+	switch(month)
+	{
+		case 1:total=0;break;//31
+		case 2:total=31;break;//28
+		case 3:total=59;break;//31
+		case 4:total=90;break;//30
+		case 5:total=120;break;//31
+		case 6:total=151;break;//30
+		case 7:total=181;break;//31
+		case 8:total=212;break;//31
+		case 9:total=242;break;//30
+		case 10:total=273;break;//31
+		case 11:total=303;break;//30
+		case 12:total=334;break;//31
+		default:printf("error\n");break;
+	}
+	total=total+day;
+	if( month > 2 && ( (year%4 == 0 && year%100 != 0) || (year%400) == 0 ) )
+	{
+		leap=1;	
+	}
+	total=total+leap;
+	printf("%d:%d:%d is %dth day\n", year, month, day, total);
+	getch();
+	return 0;
+}
+
+	
+	3.根据个人收入计算个人所得税，免税额为3500
+	7级超额累进税率： 
+	全月应纳税所得额 			税率 	速算扣除数(元) 
+	全月应纳税额不超过1500元 		3% 	0 
+	全月应纳税额超过1500元至4500元 		10% 	105 
+	全月应纳税额超过4500元至9000元 		20% 	555 
+	全月应纳税额超过9000元至35000元		25% 	1005 
+	全月应纳税额超过35000元至55000元 	30% 	2755 
+	全月应纳税额超过55000元至80000元  	35% 	5505
+	全月应纳税额超过80000元  		45% 	13505 
+	
+	例如：你月收入:3000,低于免税额3500，不必缴税
+			月收入:4000,4000-3500=500<1500,属于第一档，缴税=(4000-3500)*0.03-0==15
+			月收入:15000,15000-3500=11500,属于第四档,缴税=(15000-3500)*0.25-1005==1870
+	要求：输入你的税前收入，输出：你最后的所得以及缴纳的税额
+#include <stdio.h>
+double tax_calc(double income)
+{
+	double tax_income,tax;
+	tax_income=income-3500; 
+	if(tax_income<=0) 
+	   tax=0; 
+	else if(tax_income<=1500) 
+	   tax=tax_income*0.03;
+	else if(tax_income>1500 && tax_income<=4500) 
+	   tax=tax_income*0.1-105;
+	else if(tax_income>4500 && tax_income<=9000) 
+	   tax=tax_income*0.20-555;
+	else if(tax_income>9000 && tax_income<=35000) 
+	   tax=tax_income*0.25-1005;
+	else if(tax_income>35000 && tax_income<=55000) 	  
+		tax=tax_income*0.30-2755;
+	else if(tax_income>55000 && tax_income<=8000) 
+	   tax=tax_income*0.35-5505;
+	else if(tax_income>80000) 
+	   tax=tax_income*0.45-13505;
+	  return tax;
+}
+int main() 
+{  
+	double  income,tax_income,tax;  /* 定义变量收入、应税所得、个人所得税 */ 
+
+	while(1)
+	{
+		printf("请输入你的收入:\n");
+		scanf("%lf",&income); 
+		if(income<0)
+			break;
+	
+		tax=tax_calc(income);
+		
+		printf("你所缴纳的税为 is:%.2f\n",tax);
+		printf("你的最终收入是 is:%.2f\n",income-tax);
+	}
+	return 0;
+} 
+
+	
+	4.利用位运算，实现以下操作：
+	定义unsigned char 型变量a，将其第1、5、7位置1，2、3、6位清0，其它位保持不变
+	0000 1010
+	1010 0010
+#include <stdio.h>
+#include <conio.h>
+int main() 
+{  
+	unsigned char a = 0x55;
+
+	printf("a1=%x\n",a);
+	a |=   (1<<1) | (1<<5) | (1<<7);
+
+	a &=  ~( (1<<2) | (1<<3) | (1<<6) );
+
+	printf("a2=%x\n",a);
+	getch();
+	return 0;
+} 
+
+	
+*选做题：
+	由键盘输入10个数字，放在一个数组中，对其进行从 "大——>小" 的排列，并输出其中最大值；
+	要求：采用 "冒泡法"、"选择法" 完成.
+
+#include "stdio.h"
+
+void swap(int *a,int *b)
+{                            
+	int tmp;
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+
+void bubblesort(int k[],int n)
+{                    /*冒泡排序*/
+	int i,j,tmp;
+	int flag = 1,cont = 0;
+
+	for(i=0;i<n && flag == 1;i++)	//控制每趟往前推一个，即少比较一次
+	{             
+		//flag = 0;	//加上flag
+		for(j=0;j<n-i-1;j++) //从第一个开始，不断与相邻的值比较，并交换最值，一直推到最后，形如冒泡
+		{	
+			cont++;
+			if(k[j]<k[j+1])
+			{         
+				swap(&k[j+1],&k[j]);
+				flag = 1;
+			}
+		}
+	}
+
+	printf("\n循环比较次数：%d\n",cont);
+}
+
+int main()
+{
+    int i,a[10] = {2,5,6,3,7,8,12,9,1,0};   
+	
+    printf("The data array is\n") ;
+    for(i=0;i<10;i++)                            /*显示原序列之中的元素*/
+        printf("%d ",a[i]);
+	
+	bubblesort(a,10);                            /*执行冒泡排序*/
+    printf("\nThe result of bubble sorting for the array is\n");
+    for(i=0;i<10;i++)
+        printf("%d ",a[i]);                            /*输出排序后的结果*/
+	printf("\n");
+	
+	return 0;
+}

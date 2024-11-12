@@ -1,6 +1,5 @@
 程序设计题(要求用指针的方法完成)
 1.编写程序，将一个字符串反向存放(编写函数实现)。
-
 #include <stdio.h>
 #include <string.h>
 void str_recover(char *p, int j)
@@ -33,7 +32,7 @@ int main(int argc, char const *argv[])
     return 0;
 }
 
-2.	编写程序my_strlen(char *str)，测得指定字符串的长度(编写函数实现)
+2.编写程序my_strlen(char *str)，测得指定字符串的长度(编写函数实现)
 #include <stdio.h>
 #include <string.h>
 
@@ -56,8 +55,8 @@ int main(int argc, char const *argv[])
     return 0;
 }
 
-3.	编写一个字符串拷贝函数，my_strcpy(char *dest,char *src)(编写函数实现)
-	将源操作数src中的字符串拷贝到dest所指向的数组中
+3.编写一个字符串拷贝函数，my_strcpy(char *dest,char *src)(编写函数实现)
+将源操作数src中的字符串拷贝到dest所指向的数组中
 #include <stdio.h>
 #include <string.h>
 void my_strcopy(char *str1, char *str2)
@@ -84,7 +83,7 @@ int main(int argc, char const *argv[])
     return 0;
 }
 
-4.	编写一个函数实现将"12345"变成十进制12345(编写函数实现)
+4.编写一个函数实现将"12345"变成十进制12345(编写函数实现)
 #include <stdio.h>
 #include <string.h>
 void turn_ten(char *str, int *num)
@@ -117,7 +116,7 @@ int main(int argc, char const *argv[])
 }
 
 
-5.	编写函数my_strcmp(char *str1, char  *str2)，比较、返回两等长字符串的大小(编写函数实现)
+5.编写函数my_strcmp(char *str1, char  *str2)，比较、返回两等长字符串的大小(编写函数实现)
 要求相等返回0，字符串1大于字符串2返回1，字符串2大于字符串1返回-1
 字符串1的第一个字母大于字符串2的第一个字母，则判定字符串1大于字符串2，相等则比较第二字母，以此类推，全部相同则判定两字符串相等
 #include <stdio.h>
@@ -155,17 +154,17 @@ int main(int argc, char const *argv[])
     return 0;
 }
 
-1、
-	设计一个计算器，可以进行加、减、乘、除运算。
-	要求从键盘输入指令及操作数，如：
-	add 15 25		//计算15+25的值，并返回结果
-	sub 25 15		//计算25+15的值，并返回结果
-	mux 3  5		//计算 3+ 5的值，并返回结果
-	div 25 5 		//计算25+ 5的值，并返回结果
+
+设计一个计算器，可以进行加、减、乘、除运算。
+要求从键盘输入指令及操作数，如：
+add 15 25		//计算15+25的值，并返回结果
+sub 25 15		//计算25+15的值，并返回结果
+mux 3  5		//计算 3+ 5的值，并返回结果
+div 25 5 		//计算25+ 5的值，并返回结果
 
 提示：
-	1.scanf("%s %d %d",name,a,b);
-	2. 用字符串比较函数strcmp
+1.scanf("%s %d %d",name,a,b);
+2. 用字符串比较函数strcmp
 #include <stdio.h>
 #include <string.h>
 

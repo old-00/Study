@@ -301,6 +301,7 @@ int main()
 3、使用sscanf读取#和@之间的字符串 abc#def@ghi
    使用sscanf读取"ti:简单爱]" ":"号与"]"之间的内容
    使用sscanf读取"[02:06.85]"  02（代表分钟）06（代表秒）到整形变量 minute、second中
+   sscanf函数用法：https://blog.csdn.net/fengxinlinux/article/details/78722526
 
 4、以下为我们的手机收到的短信的格式，请利用指针数组与strtok函数对其解析
 	char msg_src[]={"+CMGR:REC UNREAD,+8613466630259,98/10/01,18:22:11+00,ABCdefGHI"};

@@ -270,7 +270,7 @@ int main(int argc, char const *argv[])
 void char_del(char *str1)
 {
     char *str2 = str1;
-    char *str3 = str2;
+    char *str3 = str2;		//不把地址保留的话 strlen无法测量str2 长度 所以必须要有str3 str2只能做删除第一个空格
     while(*str1!=' '&&*str1!='\0') str1++;
     if(*str1!='\0')
     {
@@ -278,9 +278,9 @@ void char_del(char *str1)
         while(*str1++ = *src_bengin++);
     }
     int site = 0;
-    while(*str2++&&++site);
+    while(*str2++&&++site);	//用site测量str2长度 
     char *src_end = str2 +site;
-    while(*src_end != ' '&&src_end!=str3)src_end--;
+    while(*src_end != ' '&&src_end!=str3)src_end--;	//str3始终指向字符串首地址
     if(*src_end!='\0'&&src_end!=str3)
     {
         char *tmp = src_end+1;

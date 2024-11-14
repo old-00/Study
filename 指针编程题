@@ -302,6 +302,43 @@ int main()
    使用sscanf读取"ti:简单爱]" ":"号与"]"之间的内容
    使用sscanf读取"[02:06.85]"  02（代表分钟）06（代表秒）到整形变量 minute、second中
    sscanf函数用法：https://blog.csdn.net/fengxinlinux/article/details/78722526
+#include<stdio.h>
+#include<string.h>
+char *ssscanf(char *str)
+{
+        static char src[128] = "";
+        int i =0,j=0;
+        int start = 0;
+        while(str[i]!='#'&&str[i]!='\0')i++;
+        if(str[i]=='#')
+        {
+            i++;
+            start = i;
+            while(str[i]!='@'&&str[i]!='\0')i++;
+            while(start<i)
+                src[j++]=str[start++];
+            src[j] = '\0';
+        }
+    return src;
+}
+int main()
+{
+    char str[128] = "";
+    fgets(str,sizeof(str),stdin);
+    str[strlen(str)-1] = '\0';
+    char *p = str;
+    printf("%s",ssscanf(p));
+    char str1[128] = "ti:简单爱]";
+    char result[128] = "";
+    sscanf(str1,"ti:%[^]]",result);
+    printf("%s\n",result);
+    char str2[128]="[02:06.85]";
+    char result2[128] = "";
+    int  minute,second = 0;
+    sscanf(str2,"[%2d:%2d",&minute,&second);
+    printf("%d:%d\n",minute,second);
+    return 0;
+}
 
 4、以下为我们的手机收到的短信的格式，请利用指针数组与strtok函数对其解析
 	char msg_src[]={"+CMGR:REC UNREAD,+8613466630259,98/10/01,18:22:11+00,ABCdefGHI"};

@@ -232,6 +232,7 @@ int main(int argc, char const *argv[])
 
 2、编写一个函数实现将一个字符串中的第一个空格和最后一个空格去掉，
 比如："ab cde f gh k"，去掉后变成"abcde f ghk"
+**-------------------做法1：只用到复制函数-------------------**
 #include <stdio.h>
 #include <string.h>
 char *my_strcopy(char *str, char *src)
@@ -259,6 +260,41 @@ int main(int argc, char const *argv[])
     if ((*p != '\0') && (p != str))
         my_strcopy(p, p + 1);
     printf("%s", str);
+    return 0;
+}
+
+**-------------------做法2：全部封装成函数-------------------**
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+void char_del(char *str1)
+{
+    char *str2 = str1;
+    char *str3 = str2;
+    while(*str1!=' '&&*str1!='\0') str1++;
+    if(*str1!='\0')
+    {
+        char *src_bengin = str1+1;
+        while(*str1++ = *src_bengin++);
+    }
+    int site = 0;
+    while(*str2++&&++site);
+    char *src_end = str2 +site;
+    while(*src_end != ' '&&src_end!=str3)src_end--;
+    if(*src_end!='\0'&&src_end!=str3)
+    {
+        char *tmp = src_end+1;
+        while(*src_end++= *tmp++);
+    }
+}
+int main()
+{
+    char str[128] = "";
+    fgets(str,sizeof(str),stdin);
+    str[strlen(str)-1] = '\0';
+    char *p = str;
+    char_del(p);
+    printf("%s",p);
     return 0;
 }
 

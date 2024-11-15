@@ -355,6 +355,44 @@ int main()
 	参数2：指针数组：存放切割完字符串的首地址
 	参数3：切割字符
 	返回值：切割的字符串总数量
+在 strtok 函数的使用中：
+strtok(msg_src, str)：在首次调用时，strtok 将会找到 msg_src 中第一个以 str 分隔的子字符串，并返回该子字符串的首地址。
+strtok(NULL, str)：在后续调用中，将 NULL 作为第一个参数传入 strtok，strtok 会继续在原字符串的当前位置往后查找下一个以 str 分隔的子字符串，并返回其首地址。
+strtok 的这一行为依赖于首次传入的字符串地址，在之后的调用中传入 NULL 以继续处理剩下的字符串。
+#include <stdio.h>
+#include <string.h>
 
+int msg_deal(char *msg_src, char *msg_done[], char *str) {
+    int count = 0;
+    char *token = strtok(msg_src, str);  // 初始调用，传入待切割的字符串
+    
+    // 使用strtok逐次获取分割的子字符串
+    while (token != NULL) {
+        msg_done[count++] = token;  // 将每个子字符串的首地址存入msg_done数组
+        token = strtok(NULL, str);  // 获取下一个子字符串
+    }
+    return count;  // 返回分割的子字符串总数量
+}
 
+int main() {
+    char msg_src[] = "+CMGR:REC UNREAD,+8613466630259,98/10/01,18:22:11+00,ABCdefGHI";
+    char *msg_done[10];  // 指针数组，用于存储分割后的字符串地址
+    int num = msg_deal(msg_src, msg_done, ",");  // 以逗号作为分隔符
+
+    // 输出解析结果
+    printf("解析结果：\n");
+    printf("日期：%s\n", msg_done[2]);
+    printf("时间：%s\n", msg_done[3]);
+
+    // 检查发件人号码是否带有国际前缀 "+86"
+    if (msg_done[1][0] == '+' && msg_done[1][1] == '8' && msg_done[1][2] == '6') {
+        printf("发件人：%s\n", msg_done[1] + 3);  // 跳过 "+86" 前缀
+    } else {
+        printf("发件人：%s\n", msg_done[1]);
+    }
+    
+    printf("内容：%s\n", msg_done[4]);
+
+    return 0;
+}
 
